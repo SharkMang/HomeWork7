@@ -26,7 +26,7 @@ Students.prototype.render = function(){
     for(let i = 0; i < this.students.length; i++){
         let tr = document.createElement("TR");
         tr.setAttribute("data-index", i);
-        tr.style.background = this.setColorOfStudent(this.students[i]);
+        tr.style.background = this.getColor(this.students[i].estimate);
         
 
         let tdFio = document.createElement("TD");
@@ -86,21 +86,20 @@ Students.prototype.eventRemove = function(event){
     let index = parseInt(tr.getAttribute("data-index"));
     this.students.splice(index, 1);
 
-    if(this.students.length !== 0){
-        this.render();
-    }else{
+    if(this.students.length === 0){
         this.table.innerHTML = "";
         let noStud = document.createElement('LABEL');
         noStud.innerHTML = 'Students not found.';
         this.table.appendChild(noStud);
-        this.getDateOfStudEstimate();  
+    }else{
+        this.render();
     }
 };
 
-Students.prototype.setColorOfStudent = function(student){
-    if(student.estimate < 3){
+Students.prototype.getColor = function(estimate){
+    if(estimate < 3){
         return 'red';
-    }else if(student.estimate < 4){
+    }else if(estimate < 4){
         return 'yellow';
     }else{
         return 'green';
@@ -309,7 +308,7 @@ Students.prototype.renderDataOfStudEstimate = function(courses){
         }
 
         let trAvgEstimate = document.createElement("TR");
-        trAvgEstimate.style.background = this.setColorOfAvgEstimate(courses[course]);
+        trAvgEstimate.style.background = this.getColor(courses[course].avgEstimate);
 
         let tdCourse = document.createElement("TD");
         tdCourse.innerHTML = course;
@@ -334,16 +333,6 @@ Students.prototype.renderDataOfStudEstimate = function(courses){
     let allNotActiveStud = document.createElement('LABEL');
     allNotActiveStud.innerHTML = 'Общее количество не активных студентов: ' + courses.countOfAllNotActiveStud;
     table.appendChild(allNotActiveStud);
-};
-
-Students.prototype.setColorOfAvgEstimate = function(course){
-    if(course.avgEstimate < 3){
-        return 'red';
-    }else if(course.avgEstimate < 4){
-        return 'yellow';
-    }else{
-        return 'green';
-    }
 };
 
 
