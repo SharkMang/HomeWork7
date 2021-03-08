@@ -71,8 +71,8 @@ Students.prototype.eventAddStudent = function(event){
     
     let student = {
         firstname: formData.get("firstname"),
-        estimate: formData.get("estimate"),
-        course: formData.get("course"),
+        estimate: Number(formData.get("estimate")),
+        course: Number(formData.get("course")),
         is_active: formData.get("is_active") !== null,
     };
 
